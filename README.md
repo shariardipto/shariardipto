@@ -94,23 +94,29 @@ I'm **Shariar Dipto**, a **Computer Science & Engineering graduate** with a stro
 
 <div align="center">
 
-<a href="https://github.com/shariardipto/Newsroom_Dashboard">
-  <img
-    src="https://github-stats-extended.vercel.app/api/pin/?username=shariardipto&repo=shariardipto%2FNewsroom_Dashboard&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=38BDF8&icon_color=7C3AED&text_color=C9D1D9&show_owner=true&v=2"
-    alt="Newsroom Dashboard"
-  />
-</a>
-
-</div>
-
 ### 📰 Newsroom Dashboard
+
+<img src="https://img.shields.io/badge/STATUS-ACTIVE_DEVELOPMENT-22C55E?style=for-the-badge&logo=github&logoColor=white" />
+<img src="https://img.shields.io/badge/PROJECT-NEWSROOM_DASHBOARD-0EA5E9?style=for-the-badge" />
+
+<br/><br/>
+
+<b>A modern newsroom workflow and operations management system.</b>
+
+<br/><br/>
+
+Built to organize and streamline real-world newsroom operations,  
+content workflows, team collaboration and publishing processes.
+
+<br/><br/>
+
+<a href="https://github.com/shariardipto/Newsroom_Dashboard">
+  <img src="https://img.shields.io/badge/PRIVATE_PROJECT-181717?style=for-the-badge&logo=github&logoColor=white" />
+</div>
 
 One of the projects I'm currently actively working on.
 
 **Newsroom Dashboard** is part of my journey toward building practical software solutions for real-world workflows and operational requirements.
-
-🔗 **Repository:**
-[github.com/shariardipto/Newsroom_Dashboard](https://github.com/shariardipto/Newsroom_Dashboard)
 
 > 🚧 **Status:** Actively being developed and improved.
 
