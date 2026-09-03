@@ -1,0 +1,122 @@
+name: Render Binary RGB Sphere
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install render dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb ffmpeg unzip curl
+
+      - name: Download Processing 4.5.6
+        run: |
+          curl -L \
+            "https://github.com/processing/processing4/releases/download/processing-1434-4.5.6/processing-4.5.6-linux-x64-portable.zip" \
+            -o /tmp/processing.zip
+
+          unzip -q /tmp/processing.zip -d /tmp/processing
+
+          PROCESSING_BIN="$(find /tmp/processing -type f -name processing | head -n 1)"
+
+          if [ -z "$PROCESSING_BIN" ]; then
+            echo "Processing executable not found."
+            exit 1
+          fi
+
+          chmod +x "$PROCESSING_BIN"
+          echo "PROCESSING_BIN=$PROCESSING_BIN" >> "$GITHUB_ENV"
+
+      - name: Prepare temporary Processing sketch
+        run: |
+          SKETCH_DIR="/tmp/BinaryRGBSphere"
+          mkdir -p "$SKETCH_DIR"
+
+          cp "animation/BinaryRGBSphere/BinaryRGBSphere.pde" \
+             "$SKETCH_DIR/BinaryRGBSphere.pde"
+
+          # Render automatically in CI.
+          sed -i \
+            's/boolean recording = false;/boolean recording = true;/' \
+            "$SKETCH_DIR/BinaryRGBSphere.pde"
+
+          # Exit Processing after the final frame so the Action does not hang.
+          sed -i \
+            's/stop();/exit();/g' \
+            "$SKETCH_DIR/BinaryRGBSphere.pde"
+
+          echo "SKETCH_DIR=$SKETCH_DIR" >> "$GITHUB_ENV"
+
+      - name: Render 330 transparent PNG frames
+        run: |
+          mkdir -p /tmp/processing-build
+
+          xvfb-run -a \
+            "$PROCESSING_BIN" cli \
+            --force \
+            --sketch="$SKETCH_DIR" \
+            --output="/tmp/processing-build" \
+            --run
+
+          echo "Rendered frames:"
+          ls -1 "$SKETCH_DIR/data"/fr*.png | wc -l
+
+          FRAME_COUNT="$(find "$SKETCH_DIR/data" -maxdepth 1 -name 'fr*.png' | wc -l)"
+
+          if [ "$FRAME_COUNT" -lt 330 ]; then
+            echo "Expected 330 frames but found $FRAME_COUNT."
+            exit 1
+          fi
+
+      - name: Build transparent animated WebP
+        run: |
+          mkdir -p assets
+
+          ffmpeg -y \
+            -framerate 30 \
+            -start_number 1 \
+            -i "$SKETCH_DIR/data/fr%03d.png" \
+            -vf "scale=420:420:flags=lanczos" \
+            -c:v libwebp_anim \
+            -lossless 0 \
+            -q:v 82 \
+            -compression_level 6 \
+            -loop 0 \
+            -pix_fmt yuva420p \
+            -an \
+            "assets/binary-rgb-sphere.webp"
+
+          ls -lh "assets/binary-rgb-sphere.webp"
+
+      - name: Upload rendered animation as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: binary-rgb-sphere
+          path: assets/binary-rgb-sphere.webp
+          if-no-files-found: error
+
+      - name: Commit animation to profile repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add assets/binary-rgb-sphere.webp
+
+          if git diff --cached --quiet; then
+            echo "No animation changes to commit."
+            exit 0
+          fi
+
+          git commit -m "Render binary RGB sphere animation"
+          git push
