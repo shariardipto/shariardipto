@@ -9,77 +9,169 @@ permissions:
 jobs:
   render:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
 
     steps:
+      # ---------------------------------------
+      # 1. Checkout
+      # ---------------------------------------
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install render dependencies
+      # ---------------------------------------
+      # 2. Dependencies
+      # ---------------------------------------
+      - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb ffmpeg unzip curl
 
+          sudo apt-get install -y \
+            xvfb \
+            ffmpeg \
+            unzip \
+            curl \
+            libgl1-mesa-dri \
+            libglx-mesa0 \
+            libglu1-mesa \
+            mesa-utils \
+            libxrandr2 \
+            libxi6 \
+            libxrender1 \
+            libxtst6
+
+      # ---------------------------------------
+      # 3. Download Processing
+      # ---------------------------------------
       - name: Download Processing 4.5.6
         run: |
-          curl -L \
+          curl -fL \
             "https://github.com/processing/processing4/releases/download/processing-1434-4.5.6/processing-4.5.6-linux-x64-portable.zip" \
             -o /tmp/processing.zip
+
+          echo "Downloaded:"
+          ls -lh /tmp/processing.zip
 
           unzip -q /tmp/processing.zip -d /tmp/processing
 
           PROCESSING_BIN="$(find /tmp/processing -type f -name processing | head -n 1)"
 
+          echo "Processing executable:"
+          echo "$PROCESSING_BIN"
+
           if [ -z "$PROCESSING_BIN" ]; then
-            echo "Processing executable not found."
+            echo "ERROR: Processing executable not found."
+            find /tmp/processing -maxdepth 3 -type f | head -100
             exit 1
           fi
 
           chmod +x "$PROCESSING_BIN"
+
           echo "PROCESSING_BIN=$PROCESSING_BIN" >> "$GITHUB_ENV"
 
-      - name: Prepare temporary Processing sketch
+      # ---------------------------------------
+      # 4. Test CLI
+      # ---------------------------------------
+      - name: Test Processing CLI
+        run: |
+          "$PROCESSING_BIN" cli --help || true
+
+      # ---------------------------------------
+      # 5. Check sketch exists
+      # ---------------------------------------
+      - name: Verify sketch
+        run: |
+          echo "Repository files:"
+          find animation -maxdepth 4 -type f || true
+
+          SOURCE="animation/BinaryRGBSphere/BinaryRGBSphere.pde"
+
+          if [ ! -f "$SOURCE" ]; then
+            echo "ERROR:"
+            echo "$SOURCE does not exist."
+            exit 1
+          fi
+
+          echo "Sketch found:"
+          ls -lh "$SOURCE"
+
+      # ---------------------------------------
+      # 6. Prepare temporary sketch
+      # ---------------------------------------
+      - name: Prepare Processing sketch
         run: |
           SKETCH_DIR="/tmp/BinaryRGBSphere"
+
           mkdir -p "$SKETCH_DIR"
 
-          cp "animation/BinaryRGBSphere/BinaryRGBSphere.pde" \
-             "$SKETCH_DIR/BinaryRGBSphere.pde"
+          cp \
+            "animation/BinaryRGBSphere/BinaryRGBSphere.pde" \
+            "$SKETCH_DIR/BinaryRGBSphere.pde"
 
-          # Render automatically in CI.
+          # Enable recording only in the temporary CI copy.
           sed -i \
             's/boolean recording = false;/boolean recording = true;/' \
             "$SKETCH_DIR/BinaryRGBSphere.pde"
 
-          # Exit Processing after the final frame so the Action does not hang.
+          # Processing should close after frame 330.
           sed -i \
             's/stop();/exit();/g' \
             "$SKETCH_DIR/BinaryRGBSphere.pde"
 
+          mkdir -p "$SKETCH_DIR/data"
+
           echo "SKETCH_DIR=$SKETCH_DIR" >> "$GITHUB_ENV"
 
-      - name: Render 330 transparent PNG frames
+          echo "Prepared sketch:"
+          ls -la "$SKETCH_DIR"
+
+      # ---------------------------------------
+      # 7. OpenGL diagnostics
+      # ---------------------------------------
+      - name: Test virtual OpenGL display
+        env:
+          LIBGL_ALWAYS_SOFTWARE: "1"
+        run: |
+          xvfb-run -a \
+            -s "-screen 0 1024x768x24" \
+            glxinfo -B
+
+      # ---------------------------------------
+      # 8. Render
+      # ---------------------------------------
+      - name: Render transparent PNG frames
+        env:
+          LIBGL_ALWAYS_SOFTWARE: "1"
+          MESA_GL_VERSION_OVERRIDE: "3.3"
         run: |
           mkdir -p /tmp/processing-build
 
-          xvfb-run -a \
-            "$PROCESSING_BIN" cli \
-            --force \
-            --sketch="$SKETCH_DIR" \
-            --output="/tmp/processing-build" \
-            --run
+          echo "Starting Processing render..."
 
-          echo "Rendered frames:"
-          ls -1 "$SKETCH_DIR/data"/fr*.png | wc -l
+          xvfb-run -a \
+            -s "-screen 0 1024x768x24" \
+            "$PROCESSING_BIN" cli \
+              --force \
+              --sketch="$SKETCH_DIR" \
+              --output="/tmp/processing-build" \
+              --run
+
+          echo "Processing finished."
 
           FRAME_COUNT="$(find "$SKETCH_DIR/data" -maxdepth 1 -name 'fr*.png' | wc -l)"
 
+          echo "Frames generated: $FRAME_COUNT"
+
+          ls -lh "$SKETCH_DIR/data" | head -20
+
           if [ "$FRAME_COUNT" -lt 330 ]; then
-            echo "Expected 330 frames but found $FRAME_COUNT."
+            echo "ERROR: Expected 330 frames, received $FRAME_COUNT."
             exit 1
           fi
 
-      - name: Build transparent animated WebP
+      # ---------------------------------------
+      # 9. WebP
+      # ---------------------------------------
+      - name: Create transparent animated WebP
         run: |
           mkdir -p assets
 
@@ -89,24 +181,30 @@ jobs:
             -i "$SKETCH_DIR/data/fr%03d.png" \
             -vf "scale=420:420:flags=lanczos" \
             -c:v libwebp_anim \
-            -lossless 0 \
-            -q:v 82 \
+            -quality 82 \
             -compression_level 6 \
             -loop 0 \
             -pix_fmt yuva420p \
             -an \
             "assets/binary-rgb-sphere.webp"
 
-          ls -lh "assets/binary-rgb-sphere.webp"
+          echo "Final animation:"
+          ls -lh assets/binary-rgb-sphere.webp
 
-      - name: Upload rendered animation as workflow artifact
+      # ---------------------------------------
+      # 10. Artifact
+      # ---------------------------------------
+      - name: Upload animation artifact
         uses: actions/upload-artifact@v4
         with:
           name: binary-rgb-sphere
           path: assets/binary-rgb-sphere.webp
           if-no-files-found: error
 
-      - name: Commit animation to profile repository
+      # ---------------------------------------
+      # 11. Commit
+      # ---------------------------------------
+      - name: Commit animation
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -114,9 +212,9 @@ jobs:
           git add assets/binary-rgb-sphere.webp
 
           if git diff --cached --quiet; then
-            echo "No animation changes to commit."
+            echo "No changes."
             exit 0
           fi
 
-          git commit -m "Render binary RGB sphere animation"
+          git commit -m "Render Binary RGB Sphere"
           git push
