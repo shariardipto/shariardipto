@@ -95,7 +95,7 @@ I'm **Shariar Dipto**, a **Computer Science & Engineering graduate** with a stro
 <div align="center">
 
 <a href="https://github.com/shariardipto/Newsroom_Dashboard">
-  <img src="https://github-readme-stats.vercel.app/api/pin/?username=shariardipto&repo=Newsroom_Dashboard&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=38BDF8&icon_color=7C3AED&text_color=C9D1D9" />
+  <img src="https://github-stats-extended.vercel.app/api/pin/?username=shariardipto&repo=Newsroom_Dashboard&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=38BDF8&icon_color=7C3AED&text_color=C9D1D9" />
 </a>
 
 </div>
@@ -216,9 +216,9 @@ flowchart LR
 
 <div align="center">
 
-<img width="49%" src="https://github-readme-stats.vercel.app/api?username=shariardipto&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=38BDF8&icon_color=7C3AED&text_color=C9D1D9&rank_icon=github" />
+<img width="49%" src="https://github-stats-extended.vercel.app/api?username=shariardipto&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=38BDF8&icon_color=7C3AED&text_color=C9D1D9&rank_icon=github" />
 
-<img width="49%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=shariardipto&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=38BDF8&text_color=C9D1D9" />
+<img width="49%" src="https://github-stats-extended.vercel.app/api/top-langs/?username=shariardipto&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=38BDF8&text_color=C9D1D9" />
 
 <br/><br/>
 
@@ -228,24 +228,15 @@ flowchart LR
 
 ---
 
-# 📈 Contribution Activity
-
-<div align="center">
-
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=shariardipto&bg_color=0D1117&color=38BDF8&line=7C3AED&point=FFFFFF&area=true&hide_border=true" width="98%" />
-
-</div>
-
----
 
 ## 🐍 Watch My Contributions Get Eaten!
 
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/shariardipto/shariardipto/output/github-contribution-grid-snake-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/shariardipto/shariardipto/output/github-contribution-grid-snake.svg">
-  <img alt="GitHub Contribution Snake Animation" src="https://raw.githubusercontent.com/shariardipto/shariardipto/output/github-contribution-grid-snake.svg" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/shariardipto/shariardipto/gh-pages/github-contribution-grid-snake-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/shariardipto/shariardipto/gh-pages/github-contribution-grid-snake.svg">
+  <img alt="GitHub Contribution Snake Animation" src="https://raw.githubusercontent.com/shariardipto/shariardipto/gh-pages/github-contribution-grid-snake.svg" width="100%">
 </picture>
 
 </div>
