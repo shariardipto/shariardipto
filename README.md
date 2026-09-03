@@ -20,7 +20,7 @@
 
 ## 🚀 About Me
 
-<img align="right" width="330" src="[https://user-images.githubusercontent.com/74038190/212749447-bfb7e725-6987-49d9-ae85-2015e3e7cc41.gif](https://animation-files.bleuje.com/2023/2023_11_pusheddigitssphere.gif)" alt="Coding Animation" />
+<img align="right" width="330" src="https://animation-files.bleuje.com/2023/2023_11_pusheddigitssphere.gif)" alt="Coding Animation" />
 <img align="right" width="330" src="" alt="Coding Animation" />
 
 I'm **Shariar Dipto**, a **Computer Science & Engineering graduate** with a strong interest in building modern software and exploring intelligent systems.
