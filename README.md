@@ -95,7 +95,10 @@ I'm **Shariar Dipto**, a **Computer Science & Engineering graduate** with a stro
 <div align="center">
 
 <a href="https://github.com/shariardipto/Newsroom_Dashboard">
-  <img src="https://github-stats-extended.vercel.app/api/pin/?username=shariardipto&repo=Newsroom_Dashboard&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=38BDF8&icon_color=7C3AED&text_color=C9D1D9" />
+  <img
+    src="https://github-stats-extended.vercel.app/api/pin/?username=shariardipto&repo=shariardipto%2FNewsroom_Dashboard&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=38BDF8&icon_color=7C3AED&text_color=C9D1D9&show_owner=true&v=2"
+    alt="Newsroom Dashboard"
+  />
 </a>
 
 </div>
