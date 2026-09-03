@@ -1,4 +1,4 @@
-<img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/41ef7bc9-f4cb-44dd-9116-fe8e160725b6" /><div align="center">
+<div align="center">
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:020617,45:0F172A,75:0EA5E9,100:7C3AED&height=250&section=header&text=Shariar%20Dipto&fontSize=60&fontColor=F8FAFC&animation=fadeIn&fontAlignY=35&desc=Frontend%20Developer%20%E2%80%A2%20Data%20Science%20%E2%80%A2%20Machine%20Learning%20%E2%80%A2%20AI&descAlignY=56&descSize=18" width="100%"/>
 
