@@ -4,22 +4,9 @@
 
 ### 👋 Hey there, I'm Shariar Dipto
 
-**CSE Graduate • Data Science PGD • Developer • AI & ML Enthusiast**
+**Data Science • Full-Stack Developer • AI & ML Enthusiast**
 
 <br/>
-
-<a href="https://github.com/shariardipto">
-  <img src="https://img.shields.io/badge/GitHub-0D1117?style=for-the-badge&logo=github&logoColor=white" />
-</a>
-<a href="https://www.linkedin.com/in/shariar.dipto">
-  <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" />
-</a>
-<a href="https://www.facebook.com/shariar.dipto">
-  <img src="https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white" />
-</a>
-<a href="https://www.instagram.com/shariar.dipto">
-  <img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" />
-</a>
 
 <br/><br/>
 
@@ -97,22 +84,21 @@ I'm **Shariar Dipto**, a **Computer Science & Engineering graduate** with a stro
 ### 📰 Newsroom Dashboard
 
 <img src="https://img.shields.io/badge/STATUS-ACTIVE_DEVELOPMENT-22C55E?style=for-the-badge&logo=github&logoColor=white" />
-<img src="https://img.shields.io/badge/PROJECT-NEWSROOM_DASHBOARD-0EA5E9?style=for-the-badge" />
 
 <br/><br/>
 
 <b>A modern newsroom workflow and operations management system.</b>
 
-<br/><br/>
-
 Built to organize and streamline real-world newsroom operations,  
 content workflows, team collaboration and publishing processes.
 
-<br/><br/>
+<br/>
 
-<a href="https://github.com/shariardipto/Newsroom_Dashboard">
+<a>
   <img src="https://img.shields.io/badge/PRIVATE_PROJECT-181717?style=for-the-badge&logo=github&logoColor=white" />
 </div>
+
+<br/>
 
 One of the projects I'm currently actively working on.
 
@@ -126,10 +112,10 @@ One of the projects I'm currently actively working on.
 
 <div align="center">
 
-| 🎓 Qualification                | 🏫 Institution / Field                                   |
+| 🎓 Qualification                | 🏫 Institution / Field                                  |
 | :------------------------------ | :------------------------------------------------------- |
 | **Post Graduate Diploma (PGD)** | **Data Science — United International University (UIU)** |
-| **Bachelor's Degree**           | **Computer Science & Engineering (CSE)**                 |
+| **Bachelor's Degree**           | **Computer Science & Engineering (CSE) — (PAU)**         |
 
 </div>
 
