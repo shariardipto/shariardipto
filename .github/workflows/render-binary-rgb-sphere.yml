@@ -12,15 +12,15 @@ jobs:
     timeout-minutes: 40
 
     steps:
-      # ---------------------------------------
+      # =======================================
       # 1. Checkout
-      # ---------------------------------------
+      # =======================================
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # ---------------------------------------
-      # 2. Dependencies
-      # ---------------------------------------
+      # =======================================
+      # 2. Install dependencies
+      # =======================================
       - name: Install dependencies
         run: |
           sudo apt-get update
@@ -39,28 +39,26 @@ jobs:
             libxrender1 \
             libxtst6
 
-      # ---------------------------------------
+      # =======================================
       # 3. Download Processing
-      # ---------------------------------------
+      # =======================================
       - name: Download Processing 4.5.6
         run: |
           curl -fL \
             "https://github.com/processing/processing4/releases/download/processing-1434-4.5.6/processing-4.5.6-linux-x64-portable.zip" \
             -o /tmp/processing.zip
 
-          echo "Downloaded:"
+          echo "Downloaded Processing:"
           ls -lh /tmp/processing.zip
 
           unzip -q /tmp/processing.zip -d /tmp/processing
 
-          PROCESSING_BIN="$(find /tmp/processing -type f -name processing | head -n 1)"
+          PROCESSING_BIN="/tmp/processing/Processing/bin/Processing"
 
-          echo "Processing executable:"
-          echo "$PROCESSING_BIN"
-
-          if [ -z "$PROCESSING_BIN" ]; then
-            echo "ERROR: Processing executable not found."
-            find /tmp/processing -maxdepth 3 -type f | head -100
+          if [ ! -f "$PROCESSING_BIN" ]; then
+            echo "ERROR: Processing executable not found:"
+            echo "$PROCESSING_BIN"
+            find /tmp/processing -maxdepth 5 -type f | head -100
             exit 1
           fi
 
@@ -68,65 +66,71 @@ jobs:
 
           echo "PROCESSING_BIN=$PROCESSING_BIN" >> "$GITHUB_ENV"
 
-      # ---------------------------------------
-      # 4. Test CLI
-      # ---------------------------------------
+          echo "Processing executable found:"
+          ls -lh "$PROCESSING_BIN"
+
+      # =======================================
+      # 4. Test Processing CLI
+      # =======================================
       - name: Test Processing CLI
         run: |
-          "$PROCESSING_BIN" cli --help || true
+          "$PROCESSING_BIN" cli --help
 
-      # ---------------------------------------
-      # 5. Check sketch exists
-      # ---------------------------------------
+      # =======================================
+      # 5. Verify PDE file
+      # =======================================
       - name: Verify sketch
         run: |
-          echo "Repository files:"
+          echo "Checking animation files..."
+
           find animation -maxdepth 4 -type f || true
 
           SOURCE="animation/BinaryRGBSphere/BinaryRGBSphere.pde"
 
           if [ ! -f "$SOURCE" ]; then
-            echo "ERROR:"
-            echo "$SOURCE does not exist."
+            echo "ERROR: Sketch not found:"
+            echo "$SOURCE"
             exit 1
           fi
 
           echo "Sketch found:"
           ls -lh "$SOURCE"
 
-      # ---------------------------------------
+      # =======================================
       # 6. Prepare temporary sketch
-      # ---------------------------------------
+      # =======================================
       - name: Prepare Processing sketch
         run: |
           SKETCH_DIR="/tmp/BinaryRGBSphere"
 
-          mkdir -p "$SKETCH_DIR"
+          rm -rf "$SKETCH_DIR"
+          mkdir -p "$SKETCH_DIR/data"
 
           cp \
             "animation/BinaryRGBSphere/BinaryRGBSphere.pde" \
             "$SKETCH_DIR/BinaryRGBSphere.pde"
 
-          # Enable recording only in the temporary CI copy.
+          # Enable rendering only in CI copy
           sed -i \
             's/boolean recording = false;/boolean recording = true;/' \
             "$SKETCH_DIR/BinaryRGBSphere.pde"
 
-          # Processing should close after frame 330.
+          # Close Processing when frame rendering finishes
           sed -i \
             's/stop();/exit();/g' \
             "$SKETCH_DIR/BinaryRGBSphere.pde"
-
-          mkdir -p "$SKETCH_DIR/data"
 
           echo "SKETCH_DIR=$SKETCH_DIR" >> "$GITHUB_ENV"
 
           echo "Prepared sketch:"
           ls -la "$SKETCH_DIR"
 
-      # ---------------------------------------
-      # 7. OpenGL diagnostics
-      # ---------------------------------------
+          echo "Recording state:"
+          grep "boolean recording" "$SKETCH_DIR/BinaryRGBSphere.pde"
+
+      # =======================================
+      # 7. Test software OpenGL
+      # =======================================
       - name: Test virtual OpenGL display
         env:
           LIBGL_ALWAYS_SOFTWARE: "1"
@@ -135,13 +139,12 @@ jobs:
             -s "-screen 0 1024x768x24" \
             glxinfo -B
 
-      # ---------------------------------------
-      # 8. Render
-      # ---------------------------------------
+      # =======================================
+      # 8. Render transparent PNG frames
+      # =======================================
       - name: Render transparent PNG frames
         env:
           LIBGL_ALWAYS_SOFTWARE: "1"
-          MESA_GL_VERSION_OVERRIDE: "3.3"
         run: |
           mkdir -p /tmp/processing-build
 
@@ -155,22 +158,26 @@ jobs:
               --output="/tmp/processing-build" \
               --run
 
-          echo "Processing finished."
+          echo "Processing render completed."
 
           FRAME_COUNT="$(find "$SKETCH_DIR/data" -maxdepth 1 -name 'fr*.png' | wc -l)"
 
           echo "Frames generated: $FRAME_COUNT"
 
-          ls -lh "$SKETCH_DIR/data" | head -20
+          find "$SKETCH_DIR/data" \
+            -maxdepth 1 \
+            -name 'fr*.png' \
+            | sort \
+            | head -10
 
           if [ "$FRAME_COUNT" -lt 330 ]; then
-            echo "ERROR: Expected 330 frames, received $FRAME_COUNT."
+            echo "ERROR: Expected 330 frames but found $FRAME_COUNT."
             exit 1
           fi
 
-      # ---------------------------------------
-      # 9. WebP
-      # ---------------------------------------
+      # =======================================
+      # 9. Create animated WebP
+      # =======================================
       - name: Create transparent animated WebP
         run: |
           mkdir -p assets
@@ -181,19 +188,19 @@ jobs:
             -i "$SKETCH_DIR/data/fr%03d.png" \
             -vf "scale=420:420:flags=lanczos" \
             -c:v libwebp_anim \
-            -quality 82 \
+            -q:v 82 \
             -compression_level 6 \
             -loop 0 \
             -pix_fmt yuva420p \
             -an \
             "assets/binary-rgb-sphere.webp"
 
-          echo "Final animation:"
+          echo "Generated animation:"
           ls -lh assets/binary-rgb-sphere.webp
 
-      # ---------------------------------------
-      # 10. Artifact
-      # ---------------------------------------
+      # =======================================
+      # 10. Upload Action artifact
+      # =======================================
       - name: Upload animation artifact
         uses: actions/upload-artifact@v4
         with:
@@ -201,18 +208,19 @@ jobs:
           path: assets/binary-rgb-sphere.webp
           if-no-files-found: error
 
-      # ---------------------------------------
-      # 11. Commit
-      # ---------------------------------------
+      # =======================================
+      # 11. Commit generated animation
+      # =======================================
       - name: Commit animation
         run: |
           git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add assets/binary-rgb-sphere.webp
 
           if git diff --cached --quiet; then
-            echo "No changes."
+            echo "No changes to commit."
             exit 0
           fi
 
