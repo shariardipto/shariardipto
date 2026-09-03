@@ -83,7 +83,7 @@ I'm **Shariar Dipto**, a **Computer Science & Engineering graduate** with a stro
 
 <img src="https://img.shields.io/badge/STATUS-ACTIVE_DEVELOPMENT-22C55E?style=for-the-badge&logo=github&logoColor=white" />
 
-<br/>
+<br/><br/>
 
 <b>A modern newsroom workflow and operations management system.</b>
 
