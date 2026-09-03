@@ -173,7 +173,7 @@ One of the projects I'm currently actively working on.
 
 <div align="center">
 
-<img src="https://skillicons.dev/icons?i=python,numpy,pandas,pytorch,tensorflow,sklearn&theme=dark" />
+<img src="https://skillicons.dev/icons?i=python,pytorch,tensorflow,sklearn&theme=dark" />
 
 <br/><br/>
 
