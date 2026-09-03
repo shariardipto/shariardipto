@@ -1,4 +1,4 @@
-<div align="center">
+<img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/41ef7bc9-f4cb-44dd-9116-fe8e160725b6" /><div align="center">
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:020617,45:0F172A,75:0EA5E9,100:7C3AED&height=250&section=header&text=Shariar%20Dipto&fontSize=60&fontColor=F8FAFC&animation=fadeIn&fontAlignY=35&desc=Frontend%20Developer%20%E2%80%A2%20Data%20Science%20%E2%80%A2%20Machine%20Learning%20%E2%80%A2%20AI&descAlignY=56&descSize=18" width="100%"/>
 
@@ -7,8 +7,6 @@
 **Data Science • Full-Stack Developer • AI & ML Enthusiast**
 
 <br/>
-
-<br/><br/>
 
 <img src="https://komarev.com/ghpvc/?username=shariardipto&label=Profile%20Views&color=0EA5E9&style=flat-square" alt="Profile Views" />
 
@@ -85,7 +83,7 @@ I'm **Shariar Dipto**, a **Computer Science & Engineering graduate** with a stro
 
 <img src="https://img.shields.io/badge/STATUS-ACTIVE_DEVELOPMENT-22C55E?style=for-the-badge&logo=github&logoColor=white" />
 
-<br/><br/>
+<br/>
 
 <b>A modern newsroom workflow and operations management system.</b>
 
@@ -170,7 +168,7 @@ One of the projects I'm currently actively working on.
 
 <div align="center">
 
-<img src="https://skillicons.dev/icons?i=python,pytorch,tensorflow,sklearn&theme=dark" />
+<img src="https://skillicons.dev/icons?i=python,numpy,pandas,pytorch,tensorflow,sklearn&theme=dark" />
 
 <br/><br/>
 
@@ -254,7 +252,7 @@ flowchart LR
   <img src="https://img.shields.io/badge/Instagram-Follow-E4405F?style=for-the-badge&logo=instagram&logoColor=white"/>
 </a>
 
-<a href="https://www.linkedin.com/in/shariar.dipto">
+<a href="https://www.linkedin.com/in/shariar-dipto">
   <img src="https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white"/>
 </a>
 
@@ -265,6 +263,7 @@ flowchart LR
 <br/><br/>
 
 ### 💻 Software Development × 📊 Data Science × 🧠 Artificial Intelligence
+
 
 <br/>
 
