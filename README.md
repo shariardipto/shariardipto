@@ -20,7 +20,12 @@
 
 ## 🚀 About Me
 
-<img align="right" width="330" src="https://animation-files.bleuje.com/2023/2023_11_pusheddigitssphere.gif" alt="Coding Animation" />
+<img
+  align="right"
+  width="330"
+  src="./assets/binary-rgb-sphere.webp"
+  alt="Animated Binary RGB Sphere"
+/>
 
 I'm **Shariar Dipto**, a **Computer Science & Engineering graduate** with a strong interest in building modern software and exploring intelligent systems.
 
