@@ -23,7 +23,7 @@
 <img
   align="right"
   width="330"
-  src="./assets/binary-rgb-sphere.webp"
+  src="https://raw.githubusercontent.com/shariardipto/profile-assets/main/assets/binary-rgb-sphere.webp"
   alt="Animated Binary RGB Sphere"
 />
 
