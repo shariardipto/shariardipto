@@ -67,7 +67,9 @@ I'm **Shariar Dipto**, a **Computer Science & Engineering graduate** with a stro
      └── AI Modeling
 
 🛠️  Building Real-World Projects
-     └── Newsroom Dashboard
+     ├── Newsroom Dashboard
+     ├── TCWS-TTS
+     └── TCWORA OS
 ```
 
 * ⚛️ Improving my skills in **React, TypeScript & modern frontend development**
@@ -80,34 +82,41 @@ I'm **Shariar Dipto**, a **Computer Science & Engineering graduate** with a stro
 
 ---
 
-# 🔥 Featured Project
+# # 🔥 Featured Project
 
 <div align="center">
 
-### 📰 Newsroom Dashboard
+### 🔥 TCWORA OS
 
 <img src="https://img.shields.io/badge/STATUS-ACTIVE_DEVELOPMENT-22C55E?style=for-the-badge&logo=github&logoColor=white" />
 
 <br/><br/>
 
-<b>A modern newsroom workflow and operations management system.</b>
+<b>A modern multi-tenant SaaS platform for restaurants and product brands.</b>
 
-Built to organize and streamline real-world newsroom operations,  
-content workflows, team collaboration and publishing processes.
+Built to simplify business operations, digital storefronts,
+orders, reservations, payments, products and customer experiences
+through one flexible and scalable platform.
 
-<br/>
+<br/><br/>
 
 <a>
   <img src="https://img.shields.io/badge/PRIVATE_PROJECT-181717?style=for-the-badge&logo=github&logoColor=white" />
+</a>
+
 </div>
 
 <br/>
 
-One of the projects I'm currently actively working on.
+One of the major projects I'm currently actively developing.
 
-**Newsroom Dashboard** is part of my journey toward building practical software solutions for real-world workflows and operational requirements.
+**TCWORA OS** is being built as a modular SaaS ecosystem where restaurants and product brands can manage their operations, storefronts and customer-facing services from a unified platform.
 
-> 🚧 **Status:** Actively being developed and improved.
+The system is designed around **multi-tenancy, modular architecture, extensibility and long-term scalability**, with support for Restaurant, Brand and Hybrid business models.
+
+Developed under **The Code Work Studio**.
+
+> 🚧 **Status:** Actively being developed, expanded and improved.
 
 ---
 
