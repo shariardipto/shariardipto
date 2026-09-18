@@ -281,6 +281,6 @@ flowchart LR
 
 <br/>
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:7C3AED,45:0EA5E9,100:020617&height=130&section=footer&text=Thank%20You%20for%20Exploring%20My%20Work&fontColor=FFFFFF&fontSize=22&fontAlignY=72&animation=fadeIn" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:7C3AED,45:0EA5E9,100:020617&height=130&section=footer&text=Thank%20You%20for%20Exploring%20My%20Work.&fontColor=FFFFFF&fontSize=22&fontAlignY=72&animation=fadeIn" width="100%"/>
 
 </div>
