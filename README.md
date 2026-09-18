@@ -22,7 +22,7 @@
 
 <img
   align="right"
-  width="330"
+  width="350"
   src="./assets/binary-rgb-sphere.webp"
   alt="Animated Binary RGB Sphere"
 />
