@@ -82,7 +82,7 @@ I'm **Shariar Dipto**, a **Computer Science & Engineering graduate** with a stro
 
 ---
 
-# # 🔥 Featured Project
+## 🔥 Featured Project
 
 <div align="center">
 
